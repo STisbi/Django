@@ -24,7 +24,7 @@ class Author(models.Model):
     biography = models.TextField(max_length=400, help_text='Who am I?')
 
     def get_absolute_url(self):
-        return reverse('blog-author', args=[str(self.id)])
+        return reverse('blog-list-by-author', args=[str(self.id)])
 
     def __str__(self):
         return self.user.username
