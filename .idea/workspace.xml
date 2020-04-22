@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a8d202c0-899a-45b0-b8a8-6fd5df7b5c38" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/migrations/0002_auto_20200421_1215.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/static/css/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/base_generic.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/author_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/blog_detail.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/blog_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/blog_list_by_author.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/index.html" afterDir="false" />
+    <list default="true" id="a8d202c0-899a-45b0-b8a8-6fd5df7b5c38" name="Default Changelist" comment="Blog/Author with detail/list views added">
+      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/author_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/blog_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/comment_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/logged_out.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/password_reset_complete.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/password_reset_confirm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/password_reset_done.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/password_reset_email.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Blog/templates/registration/password_reset_form.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Blog/Blog/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/Blog/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blog/Blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/Blog/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Blog/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Blog/forum/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/forum/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blog/forum/templates/base_generic.html" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/forum/templates/base_generic.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blog/forum/templates/forum/blog_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/forum/templates/forum/blog_detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Blog/forum/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/forum/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Blog/forum/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Blog/forum/views.py" afterDir="false" />
     </list>
@@ -62,6 +65,14 @@
       <option name="presentableId" value="Default" />
       <updated>1587408021315</updated>
     </task>
+    <task id="LOCAL-00001" summary="Blog/Author with detail/list views added">
+      <created>1587500993734</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587500993734</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -76,5 +87,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Blog/Author with detail/list views added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Blog/Author with detail/list views added" />
   </component>
 </project>

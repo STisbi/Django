@@ -9,5 +9,10 @@
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Comments</h4>
+    <p><a href="{% url 'add-comment' blog.pk %}">Leave a comment</a></p>
+    {% for remark in blog.comment_set.all %}
+      <p>{{ remark.comment }}</p>
+      <p>{{ remark.author }}, {{ remark.post_date }}</p>
+    {% endfor %}
   </div>
 {% endblock %}

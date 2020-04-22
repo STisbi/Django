@@ -1,5 +1,9 @@
+from datetime import date
+
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import Blog, Author, Comment
 
@@ -60,3 +64,44 @@ class BlogListByAuthorView(generic.ListView):
         context['blogger'] = get_object_or_404(Author, pk=self.kwargs['pk'])
 
         return context
+
+
+class AddCommentView(LoginRequiredMixin, generic.CreateView):
+    model = Comment
+    fields = ['comment']
+
+    def form_valid(self, form):
+        blog_id = self.kwargs['pk']
+
+        form.instance.post_date = date.today()
+        form.instance.blog = get_object_or_404(Blog, pk=blog_id)
+        form.instance.author = self.request.user
+
+        return super(AddCommentView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse(viewname='blog-detail', kwargs={'pk': self.kwargs['pk']})
+
+
+class AddBlogView(LoginRequiredMixin, generic.CreateView):
+    model = Blog
+    fields = ['title', 'entry']
+
+    def form_valid(self, form):
+        form.instance.post_date = date.today()
+        form.instance.author = Author.objects.get(user=self.request.user)
+
+        return super(AddBlogView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse(viewname='blogs')
+
+
+class AddAuthorView(generic.CreateView):
+    model = Author
+    fields = '__all__'
+
+    def get_success_url(self):
+        return reverse(viewname='index')
+
+
