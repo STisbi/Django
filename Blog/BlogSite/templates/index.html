@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Forum Home</h1>
+  <p>Welcome to the Forum, a website developed by <em>The Dark Lord</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>The forum metrics:</p>
+  <ul>
+    <li><strong>Blogs:</strong> {{ number_of_blogs }}</li>
+    <li><strong>Authors:</strong> {{ number_of_authors }}</li>
+    <li><strong>Comments:</strong> {{ number_of_comments }}</li>
+  </ul>
+{% endblock %}
