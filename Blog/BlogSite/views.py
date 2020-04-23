@@ -5,14 +5,14 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
-from .models import Blog, Author, Comment
+from .models import Blog, BlogUser, Comment
 
 # Create your views here.
 class IndexView(generic.TemplateView):
     template_name = 'index.html'
 
     number_of_blogs = Blog.objects.all().count()
-    number_of_authors = Author.objects.all().count()
+    number_of_authors = BlogUser.objects.all().count()
     number_of_comments = Comment.objects.all().count()
 
     def get_context_data(self, **kwargs):
@@ -36,7 +36,7 @@ class BlogDetailView(generic.DetailView):
 
 
 class AuthorListView(generic.ListView):
-    model = Author
+    model = BlogUser
 
 
 class BlogListByAuthorView(generic.ListView):
@@ -49,7 +49,7 @@ class BlogListByAuthorView(generic.ListView):
         Return list of Blog objects created by BlogAuthor (author id specified in URL)
         """
         id = self.kwargs['pk']
-        target_author = get_object_or_404(Author, pk=id)
+        target_author = get_object_or_404(BlogUser, pk=id)
 
         return Blog.objects.filter(author=target_author)
 
@@ -61,7 +61,7 @@ class BlogListByAuthorView(generic.ListView):
         context = super(BlogListByAuthorView, self).get_context_data(**kwargs)
 
         # Get the blogger object from the "pk" URL parameter and add it to the context
-        context['blogger'] = get_object_or_404(Author, pk=self.kwargs['pk'])
+        context['blogger'] = get_object_or_404(BlogUser, pk=self.kwargs['pk'])
 
         return context
 
@@ -89,7 +89,7 @@ class AddBlogView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.post_date = date.today()
-        form.instance.author = Author.objects.get(user=self.request.user)
+        form.instance.author = BlogUser.objects.get(user=self.request.user)
 
         return super(AddBlogView, self).form_valid(form)
 
@@ -98,7 +98,7 @@ class AddBlogView(LoginRequiredMixin, generic.CreateView):
 
 
 class AddAuthorView(generic.CreateView):
-    model = Author
+    model = BlogUser
     fields = '__all__'
 
     def get_success_url(self):
