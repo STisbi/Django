@@ -6,7 +6,7 @@
   <ul>
     {% for blogger in bloguser_list %}
       <li>
-        <a href="">{{ blogger }}</a>
+        <a href="{% url 'blog-list-by-author' blogger.pk %}">{{ blogger }}</a>
       </li>
     {% endfor %}
   </ul>

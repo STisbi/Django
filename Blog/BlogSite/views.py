@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 from .models import Blog, BlogUser, Comment
 
+
 # Create your views here.
 class IndexView(generic.TemplateView):
     template_name = 'index.html'
@@ -99,7 +100,7 @@ class AddBlogView(LoginRequiredMixin, generic.CreateView):
 
 class AddAuthorView(generic.CreateView):
     model = BlogUser
-    fields = '__all__'
+    fields = ['username', 'password', 'biography']
 
     def get_success_url(self):
         return reverse(viewname='index')

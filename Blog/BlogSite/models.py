@@ -9,6 +9,9 @@ from django.urls import reverse
 class BlogUser(AbstractUser):
     biography = models.TextField(max_length=400, help_text='Who am I?', default="I think therefore I am.")
 
+    def get_absolute_url(self):
+        return reverse('blog-list-by-author', args=[str(self.id)])
+
 
 class Blog(models.Model):
     title = models.CharField(max_length=20)
