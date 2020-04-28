@@ -4,8 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth import authenticate, login
 
 from .models import Blog, BlogUser, Comment
+from .forms import CreateBlogUserModelForm
 
 
 # Create your views here.
@@ -13,7 +15,7 @@ class IndexView(generic.TemplateView):
     template_name = 'index.html'
 
     number_of_blogs = Blog.objects.all().count()
-    number_of_authors = BlogUser.objects.all().count()
+    number_of_authors = BlogUser.objects.with_perm(perm='BlogSite.add_blog').count()
     number_of_comments = Comment.objects.all().count()
 
     def get_context_data(self, **kwargs):
@@ -38,6 +40,15 @@ class BlogDetailView(generic.DetailView):
 
 class AuthorListView(generic.ListView):
     model = BlogUser
+
+    def get_queryset(self):
+        """
+        Return list of Bloggers only
+
+        :return: List of bloggers
+        """
+
+        return BlogUser.objects.with_perm(perm="BlogSite.add_blog")
 
 
 class BlogListByAuthorView(generic.ListView):
@@ -98,9 +109,23 @@ class AddBlogView(LoginRequiredMixin, generic.CreateView):
         return reverse(viewname='blogs')
 
 
-class AddAuthorView(generic.CreateView):
-    model = BlogUser
-    fields = ['username', 'password', 'biography']
+class AddAuthorView(generic.FormView):
+    form_class = CreateBlogUserModelForm
+    template_name = 'BlogSite/author_form.html'
+
+    # At this point, the form has validated the data as good
+    def form_valid(self, form):
+        # The original method
+        valid = super(AddAuthorView, self).form_valid(form)
+
+        # Save the user data
+        user = form.save()
+
+        # Log them in
+        login(self.request, user)
+
+        # Return the orginal return value
+        return valid
 
     def get_success_url(self):
         return reverse(viewname='index')
