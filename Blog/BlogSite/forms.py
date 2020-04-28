@@ -2,7 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
-from .models import BlogUser
+from .models import BlogUser, Document
+
 
 class CreateBlogUserModelForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -26,4 +27,11 @@ class CreateBlogUserModelForm(forms.ModelForm):
 
         # Return the original cleaned data
         return cleaned_data
+
+
+class UploadDocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['title', 'document_1_name', 'document_1', 'document_1_desc',
+                  'document_2_name', 'document_2', 'document_2_desc',]
 

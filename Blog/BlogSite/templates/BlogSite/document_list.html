@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Document List</h1>
+  {% if document_list %}
+  <ul>
+    {% for document in document_list %}
+      <li>
+        <a href="{{ document.get_absolute_url }}">{{ document.title }}</a> ({{ document.author }})
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no documents uploaded on this forum.</p>
+  {% endif %}
+{% endblock %}

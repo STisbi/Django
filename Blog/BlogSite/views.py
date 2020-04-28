@@ -6,8 +6,8 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import authenticate, login
 
-from .models import Blog, BlogUser, Comment
-from .forms import CreateBlogUserModelForm
+from .models import Blog, BlogUser, Comment, Document
+from .forms import CreateBlogUserModelForm, UploadDocumentForm
 
 
 # Create your views here.
@@ -101,7 +101,7 @@ class AddBlogView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.post_date = date.today()
-        form.instance.author = BlogUser.objects.get(user=self.request.user)
+        form.instance.author = self.request.user
 
         return super(AddBlogView, self).form_valid(form)
 
@@ -129,3 +129,25 @@ class AddAuthorView(generic.FormView):
 
     def get_success_url(self):
         return reverse(viewname='index')
+
+
+class DocumentDetailView(generic.DetailView):
+    model = Document
+
+
+class DocumentListView(generic.ListView):
+    model = Document
+
+
+class UploadDocumentView(generic.FormView):
+    form_class = UploadDocumentForm
+    template_name = 'BlogSite/upload_document_form.html'
+
+    def get_success_url(self):
+        return reverse(viewname='documents')
+
+    def form_valid(self, form):
+        form.instance.upload_date = date.today()
+        form.instance.author = self.request.user
+
+        return super(UploadDocumentView, self).form_valid(form)

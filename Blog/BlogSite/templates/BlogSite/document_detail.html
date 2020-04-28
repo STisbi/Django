@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Title: {{ document.title }}</h1>
+
+  <p><strong>Author:</strong> <a href="{% url 'blog-list-by-author' document.author.pk %}">{{ document.author }}</a></p>
+  <p><strong>Upload Date:</strong> {{ document.upload_date }}</p>
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Comments</h4>
+  </div>
+{% endblock %}

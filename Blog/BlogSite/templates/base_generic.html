@@ -18,8 +18,10 @@
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'blogs' %}">All blogs</a></li>
           <li><a href="{% url 'authors' %}">All authors</a></li>
+          <li><a href="{% url 'documents' %}">All documents</a></li>
           {% if user.is_authenticated and perms.BlogSite.add_blog %}
             <li><a href="{% url 'add-blog' %}">Add blog</a></li>
+            <li><a href="{% url 'upload-document' %}">Upload document</a></li>
           {% endif %}
         </ul>
 
