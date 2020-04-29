@@ -7,8 +7,19 @@
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Blogs by {{ blogger }}</h4>
+    <table id="UserBlogListTable" class="table table-hover">
+      <thead>
+      <tr>
+        <th onClick="sortTable(0)">Title</th>
+        <th onClick="sortTable(1)">Post Date</th>
+      </tr>
+      </thead>
       {% for blog in blog_list %}
-        <p><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>, {{ blog.post_date }}</p>
+        <tr>
+          <td><a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a></td>
+          <td>{{ blog.post_date }}</td>
+        </tr>
       {% endfor %}
+    </table>
   </div>
 {% endblock %}

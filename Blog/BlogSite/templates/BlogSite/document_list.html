@@ -4,11 +4,20 @@
   <h1>Document List</h1>
   {% if document_list %}
   <ul>
-    {% for document in document_list %}
-      <li>
-        <a href="{{ document.get_absolute_url }}">{{ document.title }}</a> ({{ document.author }})
-      </li>
-    {% endfor %}
+    <table id="DocumentListTable" class="table table-hover">
+      <thead>
+      <tr>
+        <th onclick="sortTable(0)">Document Name</th>
+        <th onclick="sortTable(1)">Document Author</th>
+      </tr>
+      </thead>
+      {% for document in document_list %}
+        <tr>
+          <td><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></td>
+          <td><a href="{% url 'blog-list-by-author' document.author.pk %}">{{ document.author }}</a></td>
+        </tr>
+      {% endfor %}
+    </table>
   </ul>
   {% else %}
     <p>There are no documents uploaded on this forum.</p>

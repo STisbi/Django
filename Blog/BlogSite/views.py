@@ -53,7 +53,7 @@ class AuthorListView(generic.ListView):
 
 class BlogListByAuthorView(generic.ListView):
     model = Blog
-    template_name = 'forum/blog_list_by_author.html'
+    template_name = 'BlogSite/blog_list_by_author.html'
 
 
     def get_queryset(self):
