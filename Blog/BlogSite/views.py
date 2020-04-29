@@ -95,9 +95,10 @@ class AddCommentView(LoginRequiredMixin, generic.CreateView):
         return reverse(viewname='blog-detail', kwargs={'pk': self.kwargs['pk']})
 
 
-class AddBlogView(LoginRequiredMixin, generic.CreateView):
+class AddBlogView(PermissionRequiredMixin, LoginRequiredMixin, generic.CreateView):
     model = Blog
-    fields = ['title', 'entry']
+    fields = ['title', 'entry',]
+    permission_required = ['BlogSite.add_blog',]
 
     def form_valid(self, form):
         form.instance.post_date = date.today()
@@ -124,7 +125,7 @@ class AddAuthorView(generic.FormView):
         # Log them in
         login(self.request, user)
 
-        # Return the orginal return value
+        # Return the original return value
         return valid
 
     def get_success_url(self):
@@ -139,15 +140,23 @@ class DocumentListView(generic.ListView):
     model = Document
 
 
-class UploadDocumentView(generic.FormView):
+class UploadDocumentView(PermissionRequiredMixin, LoginRequiredMixin, generic.FormView):
     form_class = UploadDocumentForm
     template_name = 'BlogSite/upload_document_form.html'
+    permission_required = ['BlogSite.add_blog',]
 
     def get_success_url(self):
         return reverse(viewname='documents')
 
     def form_valid(self, form):
+        # Call the original method first
+        valid = super(UploadDocumentView, self).form_valid(form)
+
+        # Make some modifications
         form.instance.upload_date = date.today()
         form.instance.author = self.request.user
 
-        return super(UploadDocumentView, self).form_valid(form)
+        # Save this form data
+        form.save()
+
+        return valid
