@@ -1,13 +1,13 @@
 from datetime import date
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth import authenticate, login
 
-from .models import Blog, BlogUser, Comment, Document
-from .forms import CreateBlogUserModelForm, UploadDocumentForm
+from .models import Blog, BlogUser, Comment, Document, VoteRecord
+from .forms import CreateBlogUserModelForm, UploadDocumentForm, DocumentFormSet
 
 
 # Create your views here.
@@ -136,8 +136,12 @@ class DocumentDetailView(generic.DetailView):
     model = Document
 
 
-class DocumentListView(generic.ListView):
-    model = Document
+class DocumentListView(generic.FormView):
+    form_class = DocumentFormSet
+    template_name = 'BlogSite/document_list.html'
+
+    def get_success_url(self):
+        return reverse(viewname='documents')
 
 
 class UploadDocumentView(PermissionRequiredMixin, LoginRequiredMixin, generic.FormView):

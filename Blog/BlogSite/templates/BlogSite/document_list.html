@@ -1,25 +1,24 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>Document List</h1>
-  {% if document_list %}
-  <ul>
-    <table id="DocumentListTable" class="table table-hover">
+  <form action="" method="post">
+    {% csrf_token %}
+    <table id="documentTable" class="table table-hover">
       <thead>
       <tr>
-        <th onclick="sortTable(0)">Document Name</th>
-        <th onclick="sortTable(1)">Document Author</th>
+        <th onclick="sortTable(0)">Title</th>
+        <th onclick="sortTable(1)">Author</th>
+        <th onclick="sortTable(2)">Priority</th>
       </tr>
       </thead>
-      {% for document in document_list %}
+      {% for x in form %}
         <tr>
-          <td><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></td>
-          <td><a href="{% url 'blog-list-by-author' document.author.pk %}">{{ document.author }}</a></td>
+          <td>{{ x.title }}</td>
+          <td>{{ x.author }}</td>
+          <td>{{ x.priority }}</td>
         </tr>
       {% endfor %}
     </table>
-  </ul>
-  {% else %}
-    <p>There are no documents uploaded on this forum.</p>
-  {% endif %}
+    <input type="submit" value="Submit">
+  </form>
 {% endblock %}

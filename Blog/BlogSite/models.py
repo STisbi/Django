@@ -56,8 +56,28 @@ class Document(models.Model):
     # An author can upload multiple documents
     author = models.ForeignKey(BlogUser, on_delete=models.SET_NULL, null=True)
 
+    priority = models.IntegerField(default=0)
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('document-detail', args=[str(self.id)])
+
+
+class VoteRecord(models.Model):
+    VOTE_CHOICES = [('U', 'Up'),
+                    ('D', 'Down'),
+                    ('N', 'Neutral'),
+                    ]
+
+    # A document can have multiple votes
+    document = models.ForeignKey(Document, on_delete=models.SET_NULL, null=True)
+
+    choice = models.CharField(max_length=1, choices=VOTE_CHOICES, default='N')
+
+    # Only 1 vote per user
+    user = models.ForeignKey(BlogUser, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.get_choice_display()

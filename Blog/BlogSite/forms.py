@@ -1,8 +1,9 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.forms import formset_factory, modelformset_factory, BaseModelFormSet
 from django.utils.translation import ugettext_lazy as _
 
-from .models import BlogUser, Document
+from .models import BlogUser, Document, VoteRecord
 
 
 class CreateBlogUserModelForm(forms.ModelForm):
@@ -35,3 +36,23 @@ class UploadDocumentForm(forms.ModelForm):
         fields = ['title', 'document_1_name', 'document_1', 'document_1_desc',
                   'document_2_name', 'document_2', 'document_2_desc',]
 
+
+class DocumentListForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(DocumentListForm, self).__init__(*args, **kwargs)
+
+        self.fields['title'].disabled = True
+        self.fields['author'].disabled = True
+
+    class Meta:
+        model = Document
+        fields = ['title', 'author', 'priority',]
+
+
+class DocumentListFormSet(BaseModelFormSet):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.queryset = Document.objects.all()
+
+
+DocumentFormSet = modelformset_factory(model=Document, form=DocumentListForm, formset=DocumentListFormSet, extra=0)
